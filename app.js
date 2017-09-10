@@ -12,7 +12,7 @@ class TodoApp extends React.Component {
         <h3>TODO</h3>
         <TodoList items={this.state.items} />
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleChange} value={this.state.text} />
+          <input onChange={this.handleChange} value={this.state.text} required/>
           <button>{'Add Task ' + (this.state.items.length + 1)}</button>
         </form>
       </div>
@@ -25,14 +25,19 @@ class TodoApp extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    var newItem = {
-      text: this.state.text,
-      id: Date.now()
-    };
-    this.setState((prevState) => ({
-      items: prevState.items.concat(newItem),
-      text: ''
-    }));
+    if(this.state.text === "") {
+      return false;
+    } else {
+      var newItem = {
+        text: this.state.text,
+        id: Date.now()
+      };
+      
+      this.setState((prevState) => ({
+        items: prevState.items.concat(newItem),
+        text: ''
+      }));
+    }
   }
 }
 
